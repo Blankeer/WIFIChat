@@ -130,6 +130,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			mLlayoutExMain.setVisibility(View.VISIBLE);
 
 			mAvatar = sp.getAvatarId();
+			mIMEI=sp.getIMEI();
 			mBirthday = sp.getBirthday();
 			mOnlineStateInt = sp.getOnlineStateId();
 			mGender = sp.getGender();
@@ -283,7 +284,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			mEtNickname.requestFocus();
 			return false;
 		}
-		// 
+		//
 		// switch (mRgGender.getCheckedRadioButtonId()) {
 		// case R.id.login_baseinfo_rb_female:
 		// mGender = "女";
@@ -324,9 +325,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					mIMEI = mTelephonyManager.getDeviceId(); // 获取IMEI
 					if (android.text.TextUtils.isEmpty(mIMEI)) {
-						mIMEI = "ef" + new Random().nextInt(90000) + "ff";
+						mIMEI = mTelephonyManager.getDeviceId(); // 获取IMEI
+						if (android.text.TextUtils.isEmpty(mIMEI)) {
+							mIMEI = "ef" + new Random().nextInt(90000) + "ff";
+						}
 					}
 					LogUtils.i("imei me=", mIMEI);
 					// 设置用户Session信息

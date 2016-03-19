@@ -13,7 +13,7 @@
 			android:id="@+id/voice_message_iv_msgimage"
 			android:layout_width="22dip"
 			android:layout_height="22dip"
-			android:layout_marginLeft="dip"
+			android:layout_marginLeft="1dip"
 			android:layout_marginRight="1dip"
 			android:gravity="center" />
 	</LinearLayout>

@@ -85,8 +85,9 @@ public class BaseApplication extends Application {
 		initFolder();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread thread, Throwable ex) {
-				System.exit(0);
-				android.os.Process.killProcess(android.os.Process.myPid());
+				LogUtils.i("application ", "exit  ....     e=" + ex);
+				ex.printStackTrace();
+				ActivitiesManager.finishAllActivities();
 			}
 		});
 	}

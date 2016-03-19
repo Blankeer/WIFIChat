@@ -107,27 +107,27 @@ public class SettingInfoActivity extends BaseActivity implements OnClickListener
         mBirthday = SessionUtils.getBirthday();
         mSelectDate = DateUtils.getDate(mBirthday);
 
-        if (mGender.equals("女")) {
-            mRbGirl.setChecked(true);
-        }
-        else {
-            mRbBoy.setChecked(true);
-        }
+//        if (mGender.equals("女")) {
+//            mRbGirl.setChecked(true);
+//        }
+//        else {
+//            mRbBoy.setChecked(true);
+//        }
 
-        Calendar mMinCalendar = Calendar.getInstance();
-        Calendar mMaxCalendar = Calendar.getInstance();
+//        Calendar mMinCalendar = Calendar.getInstance();
+//        Calendar mMaxCalendar = Calendar.getInstance();
 
-        mMinCalendar.set(Calendar.YEAR, mMinCalendar.get(Calendar.YEAR) - MIN_AGE);
-        mMinDate = mMinCalendar.getTime();
-        mMaxCalendar.set(Calendar.YEAR, mMaxCalendar.get(Calendar.YEAR) - MAX_AGE);
-        mMaxDate = mMaxCalendar.getTime();
+//        mMinCalendar.set(Calendar.YEAR, mMinCalendar.get(Calendar.YEAR) - MIN_AGE);
+//        mMinDate = mMinCalendar.getTime();
+//        mMaxCalendar.set(Calendar.YEAR, mMaxCalendar.get(Calendar.YEAR) - MAX_AGE);
+//        mMaxDate = mMaxCalendar.getTime();
 
-        mCalendar = Calendar.getInstance();
-        mCalendar.setTime(mSelectDate);
-        flushBirthday(mCalendar);
-        mDpBirthday.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
-                mCalendar.get(Calendar.DAY_OF_MONTH), this);
-        mHtvAge.setText(mAge + "");
+//        mCalendar = Calendar.getInstance();
+//        mCalendar.setTime(mSelectDate);
+//        flushBirthday(mCalendar);
+//        mDpBirthday.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+//                mCalendar.get(Calendar.DAY_OF_MONTH), this);
+//        mHtvAge.setText(mAge + "");
         Picasso.with(mContext).load(ImageUtils.getImageID(Users.AVATAR + mAvatar)).into(mIvAvater);
         mEtNickname.setText(SessionUtils.getNickname());
     }

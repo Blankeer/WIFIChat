@@ -200,9 +200,10 @@ public class UDPMessageListener implements Runnable {
 			break;
 
 		case IPMSGConst.IPMSG_SENDMSG: {
-			LogUtils.i(TAG, "收到MSG消息");
+			LogUtils.i(TAG, "收到消息");
 			final Message msg = (Message) ipmsgRes.getAddObject();
-
+			Users user = mOnlineUsers.get(msg.getSenderIMEI());
+			user.setLastTime(System.currentTimeMillis());
 			switch (msg.getContentType()) {
 			case TEXT:
 				sendUDPdata(IPMSGConst.IPMSG_RECVMSG, senderIp,
@@ -364,7 +365,7 @@ public class UDPMessageListener implements Runnable {
 
 	/** 刷新用户列表 **/
 	public void refreshUsers() {
-		removeOnlineUser(null, 0); // 清空在线用户列表
+//		removeOnlineUser(null, 0); // 清空在线用户列表
 		notifyOnline();
 	}
 
@@ -443,8 +444,7 @@ public class UDPMessageListener implements Runnable {
 					sendDatagramPacket = new DatagramPacket(sendBuffer,
 							sendBuffer.length, targetAddr, IPMSGConst.PORT);
 					UDPSocket.send(sendDatagramPacket);
-					LogUtils.i(TAG, "sendUDPdata() 数据发送成功 " + targetIP + ","
-							+ ipmsgProtocol.getAddObject().toString());
+					LogUtils.i(TAG, "sendUDPdata() 数据发送成功 " + targetIP + ",");
 				} catch (Exception e) {
 					e.printStackTrace();
 					LogUtils.e(TAG, "sendUDPdata() 发送UDP数据包失败");
@@ -455,6 +455,7 @@ public class UDPMessageListener implements Runnable {
 	}
 
 	public synchronized void addOnlineUser(String paramIMEI, Users paramObject) {
+		paramObject.setLastTime(System.currentTimeMillis());
 		mOnlineUsers.put(paramIMEI, paramObject);
 
 		for (int i = 0; i < mListenerList.size(); i++) {
@@ -495,6 +496,13 @@ public class UDPMessageListener implements Runnable {
 	}
 
 	public HashMap<String, Users> getOnlineUserMap() {
+		long nowTime = System.currentTimeMillis();
+		for (Users user : mOnlineUsers.values()) {
+			LogUtils.i(TAG, "last time=" + user.getLastTime());
+			if (nowTime - user.getLastTime() > 5 * 60 * 1000) {// 5分钟t一次
+				mOnlineUsers.remove(user.getIMEI());
+			}
+		}
 		return mOnlineUsers;
 	}
 
